@@ -205,6 +205,8 @@
 				margin: 2px;
 				width: 50px;
 				height: 30px;}
+				.save-container .content .save-journal-color-pannel li.selected {
+					box-shadow: 0px 1px 1px black;}
 				.save-container .content .save-journal-color-pannel li:active{
 					border-color: #aaacaf;}
 				.save-container .content .save-journal-color-pannel li[id='color-1'] {
