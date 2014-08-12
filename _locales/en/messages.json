@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message":	"TripFlock"
+	},
+	"description":	{
+		"message":	"You can enter any information that you would like to display about the TripFlock."
+	},
+	"loginPageTitle": {
+		"message": "Login Form"
+	},
+	"optionPageTitle": {
+		"message": "TripFlock Options"
+	},
+	"logoutText": {
+		"message": "Sign out(John Doe)"
+	},
+	"loginFormTitle": {
+		"message": "LOGIN"
+	},
+	"emailLabel": {
+		"message": "Email Address:"
+	},
+	"passwordLabel": {
+		"message": "Password:"
+	},
+	"loginButtonText": {
+		"message": "SIGN IN"
+	},
+	"selectJournalLabel": {
+		"message": "Journal Name: "
+	},
+	"selectJournalLabelOr": {
+		"message": "Or"
+	},
+	"selectJournalLabelAdd": {
+		"message": "+ Add New"
+	},
+	"saveButtonText": {
+		"message": "SAVE"
+	},
+	"clipTypeLabel": {
+		"message": "Clip Type"
+	},
+	"clipTypeUrl": {
+		"message": "Clip url page name and summary text"
+	},
+	"clipTypeScreenshot": {
+		"message": "Clip screenshot"
+	},
+	"clipTypeText": {
+		"message": "Clip Text"
+	},
+	"clipTypeTextPlaceholder": {
+		"message": "Copy text from page and paste here"
+	},
+	"saveJournalName": {
+		"message": "Journal Name: "
+	},
+	"saveJournalLabelOr": {
+		"message": "Or"
+	},
+	"saveJournalLabelCancel": {
+		"message": "Cancel"
+	},
+	"clipAccessTypeUrl": {
+		"message": "Private (Invite people later)"
+	},
+	"clipAccessTypeScreenshot": {
+		"message": "Public (Anyone can see)"
+	},
+	"clipAccessTypeLabel": {
+		"message": "Access Type"
+	},
+	"clipTypeTextPlaceholder": {
+		"message": "Clip Type Text"
+	}
+}

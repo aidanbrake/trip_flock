@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/HTML; charset=utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Language" content="fr" />
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/translate.js"></script>
+    <script src="/js/popup.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style/app.css" />
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+    <title data-i18n='loginPageTitle'></title>
+</head>
+	<div class='wrapper'>
+		<div id='header'>
+			<div class='logo-container'>
+				<img src='/img/logo.png' class='logo' />
+			</div>
+			<div class='logout-container'>
+				<a href='#' data-i18n='logoutText'></a>
+			</div>
+		</div>
+		<div class='login-container'>
+			<div id='login'>
+				<div class='input'>
+					<h3 class='title' data-i18n='loginFormTitle'></h3>
+					<h6 class='label' data-i18n='emailLabel'></h6>
+					<input type='text' class='email' id='email' value='aidanbrake@gmail.com'/>
+					<h6 class='label' data-i18n='passwordLabel'></h6>
+					<input type='password' class='password' id='password' />
+				</div>
+			</div>
+			<div class='button-container'>
+				<input type='button' class='button' id='login-button' data-i18n-value='loginButtonText' />
+			</div>
+		</div>
+
+		<div class='select-container'>
+			<div id='select'>
+				<div class='input'>
+					<h6 class='label' data-i18n='selectJournalLabel'></h6>
+					<select id='journals'>
+						<option value='1' >Bill Test(private)</option>
+					</select>
+					<h6 class='label' id='clip-type-label' data-i18n='clipTypeLabel'></h6>
+					<div class='clipTypeContainer'>
+						<input type='radio' name='clip-type' id='clip-type-url' class='clip-type-option' value='url' />
+						<label for='clip-type-url' data-i18n='clipTypeUrl'></label>
+						<br />
+						<input type='radio' name='clip-type' id='clip-type-screenshot' class='clip-type-option' value='screenshot' />
+						<label for='clip-type-screenshot' data-i18n='clipTypeScreenshot'></label>
+						<br />
+						<input type='radio' name='clip-type' id='clip-type-text' class='clip-type-option' value='text' />
+						<label for='clip-type-text' data-i18n='clipTypeText'></label>
+						<input type='text' id='clip-type-text-content' data-i18n-placeholder='clipTypeTextPlaceholder' />
+					</div>
+					<span>
+						<h6 class='label' data-i18n='selectJournalLabelOr'></h6>
+						<h6 class='addNewJournal' data-i18n='selectJournalLabelAdd'></h6>
+					</span>
+				</div>
+			</div>
+			<div class='button-container'>
+				<input type='button' class='button' id='select-save-button' data-i18n-value='saveButtonText' />
+			</div>
+		</div>
+
+		<div class='save-container'>
+			<div class='content'>
+				<div class='save-journal-name-container'>
+					<div>
+						<h6 class='label' data-i18n='saveJournalName'></h6>
+						<input type='text' class='save-journal-name' id='save-journal-name' />
+					</div>
+					<span>
+						<h6 class='label' data-i18n='saveJournalLabelOr'></h6>
+						<h6 class='saveNewJournal' id='save-new-journal' data-i18n='saveJournalLabelCancel'></h6>
+					</span>
+				</div>
+				<div class='save-option-container'>
+					<h6 class='label' id='clip-access-type-label' data-i18n='clipAccessTypeLabel'></h6>
+					<div class='save-journal-access-type'>
+						<input type='radio' name='clip-access-type' id='clip-access-type-url' class='clip-access-type-option' value='private' />
+						<label for='clip-access-type-url' data-i18n='clipAccessTypeUrl'></label>
+						<br />
+						<input type='radio' name='clip-access-type' id='clip-access-type-screenshot' class='clip-access-type-option' value='public' />
+						<label for='clip-access-type-screenshot' data-i18n='clipAccessTypeScreenshot'></label>
+					</div>
+				</div>
+				<div class='clipType'>
+					<h6 class='label' id='clip-type-label' data-i18n='clipTypeLabel'></h6>
+					<div class='clipTypeContainer'>
+						<input type='radio' name='clip-type' id='save-clip-type-url' class='clip-type-option' value='url' />
+						<label for='save-clip-type-url' data-i18n='clipTypeUrl'></label>
+						<br />
+						<input type='radio' name='clip-type' id='save-clip-type-screenshot' class='clip-type-option' value='screenshot' />
+						<label for='save-clip-type-screenshot' data-i18n='clipTypeScreenshot'></label>
+						<br />
+						<input type='radio' name='clip-type' id='save-clip-type-text' class='clip-type-option' value='text' />
+						<label for='save-clip-type-text' data-i18n='clipTypeText'></label>
+						<input type='text' id='save-clip-type-text-content' data-i18n-placeholder='clipTypeTextPlaceholder' />
+					</div>
+					<div class='save-journal-color-pannel'>
+						<ul class='colors'>
+							<li class='color selected' id='color-1'></li>
+							<li class='color' id='color-2'></li>
+							<li class='color' id='color-3'></li>
+							<li class='color' id='color-4'></li>
+							<li class='color' id='color-5'></li>
+							<li class='color' id='color-6'></li>
+							<li class='color' id='color-7'></li>
+							<li class='color' id='color-8'></li>
+							<li class='color' id='color-9'></li>
+							<li class='color' id='color-10'></li>
+							<li class='color' id='color-11'></li>
+							<li class='color' id='color-12'></li>
+							<li class='color' id='color-13'></li>
+							<li class='color' id='color-14'></li>
+							<li class='color' id='color-15'></li>
+							<li class='color' id='color-16'></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class='button-container'>
+				<input type='button' class='button' id='select-save-button' data-i18n-value='saveButtonText' />
+			</div>
+		</div>
+	</div>
+<body>
+</body>
+</html>
