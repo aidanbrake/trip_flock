@@ -1,5 +1,5 @@
 (function(window, $){
 	$(document).ready(function(){
-		// alert("Hello");
+		console.log("The extension is running...");
 	});
 })(window, jQuery);

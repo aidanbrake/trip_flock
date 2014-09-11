@@ -18,7 +18,7 @@
 			 * Initialize popup
 			 */
 			init: function() {
-				//alert(this.email);
+				console.log("The extension is initializing...");
 				$($('input .email')[0]).val(localStorage.getItem('_email') || '');
 				$($('input .password')[0]).val(localStorage.getItem('_password') || '');
 				$($('.button-container #login-button')[0]).bind('click', this.onLogin);
@@ -84,14 +84,14 @@
 		     * Save the selected trip as default trip.
 		     */
 			onSelectSave: function() {
-				alert("Saving...");
+				console.log("You've clicked save button in select journal section.");
 			},
 
 			/**
 		     * Save the created trip with info that user filled.
 		     */
 			onNewTripSave: function() {
-				alert("Saving the created Trip...");
+				console.log("Saving the created Trip...");
 			}
 		};
 

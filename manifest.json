@@ -4,11 +4,10 @@
    },
    "browser_action": {
       "default_title": "__MSG_name__",
-      "default_popup": "popup.html"/*,
-      "default_icon": "img/64.png"*/
+      "default_popup": "popup.html",
+      "default_icon": "img/default-icon.png"
    },
    "icons": {
-      // "128": "img/128.png"
    },
    "name": "__MSG_name__",
    "short_name": "__MSG_name__",

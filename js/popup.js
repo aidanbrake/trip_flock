@@ -34,7 +34,7 @@
 			 */
 			init: function() {
 				var self = this;
-				//alert(this.email);
+				console.log("The popup was just initialized...");
 				$($('input .email')[0]).val(localStorage.getItem('_email') || '');
 				$($('input .password')[0]).val(localStorage.getItem('_password') || '');
 				$($('.button-container #login-button')[0]).bind('click', this.onLogin);
@@ -99,25 +99,39 @@
 					beforeSend: function (xhr) {
 						xhr.setRequestHeader("accessToken", self._accessToken);
 					},
+					headers: {
+						"accessToken": self._accessToken
+					},
 					type: "GET",
 					url: "http://api.tripflock.com/api/Journal/",
 					contentType: "application/json",
 					success: function (data, textStatus, xhr) {
-						if (xhr.status == 200 || xhr.status == 204) {
-							// alert(JSON.stringify(data));
+						if (xhr.status == 200) {
+							var $selector = $('div#select select#journals'),
+								journals = JSON.parse(data);
 
+							$('div#select select#journals option').remove();
 							$($('div .login-container')[0]).hide();
 							$($('div .save-container')[0]).hide();
 							$($('div .select-container')[0]).show();
+
+							for (var i = 0; i < journals.length; i++) {
+								$('<option/>').val(journals[i].Id).text(journals[i].Title + ((journals[i].AccessType == 1) ? "(private)" : "")).appendTo($selector);
+							}
+						} else if (xhr.status == 204) {
+							$($('div .login-container')[0]).hide();
+							$($('div .save-container')[0]).hide();
+							$($('div .select-container')[0]).show();
+							$('div#select select#journals option').remove();
 						}
 						else {
-							alert(textStatus);
+							console.log(textStatus);
 							self.showLoginContainer();
 						}
 					},
-					error: function (response) {
-						alert(response.statusText);
-						self.showLoginContainer();
+					error: function () {
+						console.log("An error occurs...");
+						window.Popup.showLoginContainer();
 					}
 				});
 			},
@@ -164,12 +178,12 @@
 							window.Popup.showSelectContainer();
 						}
 						else {
-							alert(textStatus);
+							console.log(textStatus);
 							window.showLoginContainer();
 						}
 					}, 
 					error: function (response) {
-						alert(response.statusText);
+						console.log(response.statusText);
 						window.showLoginContainer();
 					}
 
@@ -189,7 +203,7 @@
 		     * Save the selected trip as default trip.
 		     */
 			onSelectSave: function() {
-				
+				console.log("You just created create button.");
 
 			},
 
@@ -204,29 +218,32 @@
 					journalClipType = self._clipType;
 				
 				if (journalName == "") {
-					alert("Journal name can't be empty. Please enter the name!");
+					console.log("Journal name can't be empty. Please enter the name!");
 					return;
 				}				
 
 				var JournalDatails = { 
 					'JournalTitle': journalName,
-					'ColorCode': journalColorCode,
-					'AccessType' : journalAccessType,
-					'ClipType' : journalClipType
+					// 'ColorCode': journalColorCode,
+					'AccessType' : journalAccessType
+					// 'ClipType' : journalClipType
 				};
 				$.ajax({
 					beforeSend: function (xhr) {
 						xhr.setRequestHeader("accessToken ", self._accessToken);
 					},
 					type: "POST",
+					headers: {
+						"accessToken": self._accessToken
+					},
 					data: JSON.stringify(JournalDatails),
 					url: "http://api.tripflock.com/api/Journal/Insert",
 					contentType: "application/json",
 					success: function (response, textStatus, xhr) {
-						alert(textStatus);
+						console.log(textStatus);
 					},
 					error: function (response) {
-						alert(response.statusText);
+						console.log(response.statusText);
 					}
 				});
 			}
