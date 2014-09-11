@@ -215,19 +215,26 @@
 					journalName = self._journalName,
 					journalAccessType = self._accessType,
 					journalColorCode = self._colorCode,
-					journalClipType = self._clipType;
+					journalClipType = self._clipType,
+					clipType = {
+						ClipTypeText: 0,
+						ClipScreenShot: 1,
+						ClipText: 2
+					};
+
+				var JournalDatails = { 
+					'JournalTitle': journalName,
+					'ColorCode': journalColorCode,
+					'AccessType' : journalAccessType,
+					'ClipType' : journalClipType
+				};
 				
 				if (journalName == "") {
 					console.log("Journal name can't be empty. Please enter the name!");
 					return;
-				}				
+				}
 
-				var JournalDatails = { 
-					'JournalTitle': journalName,
-					// 'ColorCode': journalColorCode,
-					'AccessType' : journalAccessType
-					// 'ClipType' : journalClipType
-				};
+				
 				$.ajax({
 					beforeSend: function (xhr) {
 						xhr.setRequestHeader("accessToken ", self._accessToken);
@@ -241,6 +248,17 @@
 					contentType: "application/json",
 					success: function (response, textStatus, xhr) {
 						console.log(textStatus);
+
+						if ( journalClipType == 1 ) {
+							//	In case of screenshot clip type...
+							chrome.tabs.captureVisibleTab(null, function(img) {
+								var screenshotUrl = img;
+							});
+						} else if ( journalClipType == 0 ) {
+							//	In case of url name and summary text
+						} else {
+							//	In case of clip text type.
+						}
 					},
 					error: function (response) {
 						console.log(response.statusText);
