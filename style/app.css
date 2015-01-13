@@ -189,7 +189,8 @@
 				width: 145px;}
 			.save-container .content .clipType .clipTypeContainer {}
 				.save-container .content .clipType .clipTypeContainer #save-clip-type-text-content {
-					display: none; 
+					/*display: none; */
+					/*opacity: 0;*/
 					width: 200px;
 					font-size: 15px;
 					border-radius: 3px;}
