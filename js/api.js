@@ -42,11 +42,11 @@ TripFlockAPI = {
 					else {
 						result.status = xhr.status;
 					}
-					callback(result);
+					callback(data, textStatus, xhr);
 				}, 
 				error: function (response) {
 					result.status = "error"
-					callback(result);
+					callback(data, textStatus, xhr);
 				}
 			});
 		}
@@ -129,23 +129,28 @@ TripFlockAPI = {
 	 *	Select all Journals
 	 */
 	getAllJournals: function(callback) {
+		if (typeof callback != "function")
+		{
+			console.log("A callback function is required.");
+			return;
+		}
+
 		$.ajax({
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader("accessToken ", accessToken);
+				xhr.setRequestHeader("accessToken", TripFlockAPI.accessToken);
+			},
+			headers: {
+				"accessToken": TripFlockAPI.accessToken
 			},
 			type: "GET",
-			url: "http://api.tripflock.com/api/Journal/",
+			url: TripFlockAPI.baseurl + "Journal/",
 			contentType: "application/json",
 			success: function (data, textStatus, xhr) {
-				if (xhr.status == 200) {
-					alert(JSON.stringify(data));
-				}
-				else {
-					alert(textStatus);
-				}
-			}, 
-			error: function (response) {
-				alert(response.statusText);
+				callback(data, textStatus, xhr);
+			},
+			error: function (data, textStatus, xhr) {
+				console.log(textStatus);
+				callback(data, textStatus, xhr);
 			}
 		});
 	},
@@ -154,6 +159,12 @@ TripFlockAPI = {
 	 *	Select Journal based on “Id”
 	 */
 	getJournalById: function(id, callback) {
+		if (typeof callback != "function")
+		{
+			console.log("A callback function is required.");
+			return;
+		}
+
 		$.ajax({
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader("accessToken ", accessToken);
@@ -162,15 +173,10 @@ TripFlockAPI = {
 			url: "http://api.tripflock.com/api/Journal/157",
 			contentType: "application/json",
 			success: function (data, textStatus, xhr) {
-				if (xhr.status == 200) {
-					alert(JSON.stringify(data));
-				}
-				else {
-					alert(textStatus);
-				}
+				callback(data, textStatus, xhr);
 			}, 
-			error: function (response) {
-				alert(response.statusText);
+			error: function (response, textStatus, xhr) {
+				callback(data, textStatus, xhr);
 			}
 		});
 	},
@@ -199,9 +205,41 @@ TripFlockAPI = {
 
 	/**
 	 *	WebClip - Clip URL Page Name and Text (or) Clip Text Request
+	 *	Adding WebClip in type of Clip URL Page Name and Text or Clip Text
+	 *	var WebClipDetails = { 
+	 *	 						'JournalId': JournalId, 
+	 *	 						'Name': "", 'ImageUrl': "", 
+	 *	 						'Text': "Test Web Clip in Invoke api method", 
+	 *	 						'ClipType': CurrentClipType 
+	 *						};
 	 */
 
+	addWebClip: function(webClipDetails, callback ) {
+		if (typeof callback != "function") {
+			console.log("A callback function is required.");
+			return;
+		}
 
+		$.ajax({
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("accessToken", TripFlockAPI.accessToken);
+			},
+			headers: {
+				"accessToken": TripFlockAPI.accessToken
+			},
+			type: "POST",
+			url: TripFlockAPI.baseurl + "File/InsertWebClip/",
+			data: JSON.stringify(webClipDetails),
+			contentType: "application/json",
+			success: function (data, textStatus, xhr) {
+				callback(data, textStatus, xhr);
+			},
+			error: function (data, textStatus, xhr) {
+				console.log(textStatus);
+				callback(data, textStatus, xhr);
+			}
+		});
+	},
 
 	/**
 	 *	WebClip - Upload ScreenShot
