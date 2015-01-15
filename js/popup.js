@@ -16,6 +16,7 @@
 			this._colorCode = '0';	//	
 			this._accessType = 0;	//	public
 			this._clipType = 0;		//	url name and summary text
+			this._text = "";		// 	For Text cilp
 			this.init();
 			
 			$($('div .save-container')[0]).hide();
@@ -88,6 +89,9 @@
 					else
 						self._accessType = 0;
 				});
+
+				$('form#save-container .save-journal-access-type #clip-access-type-private').click();
+				$('form#save-container .clipTypeContainer #save-clip-type-url').click();
 			},
 
 			/**
@@ -122,11 +126,19 @@
 										'data-color-code': journals[i].ColorCode,
 										'data-access-type': journals[i].AccessType,
 										'data-title':journals[i].Title,
-										'data-clip-type':journals[i].ClipType
+										'data-clip-type':(journals[i].ClipType == undefined) ? TripFlockAPI.clipType.urlPageNameAndSummary : journals[i].ClipType
 									})
 								.val(journals[i].Id)
 								.text(journals[i].Title + ((journals[i].AccessType == 1) ? "(private)" : "")).appendTo($selector);
 							}
+
+							var firstJournalClipType = $($('.select-container select#journals option')[0]).attr('data-clip-type');
+							if (firstJournalClipType == TripFlockAPI.clipType.urlPageNameAndSummary)
+								$('#clip-type-url').click();
+							else if (firstJournalClipType == TripFlockAPI.clipType.screenshot)
+								$('#clip-type-screenshot').click();
+							else
+								$('#clip-type-text').click();
 
 							$('div#select select#journals').change(function() {
 								var value = $(this).val();
@@ -135,7 +147,14 @@
 									curId = $selectedOption.attr('data-id'),
 									curAccessType = $selectedOption.attr('data-access-type'),
 									curClipType = $selectedOption.attr('data-clip-type');
-							})
+
+								if (curClipType == TripFlockAPI.clipType.urlPageNameAndSummary)
+									$('#clip-type-url').click();
+								else if (curClipType == TripFlockAPI.clipType.screenshot)
+									$('#clip-type-screenshot').click();
+								else
+									$('#clip-type-text').click();
+							});
 						} else if (xhr.status == 204) {
 							$($('div .login-container')[0]).hide();
 							$($('div .save-container')[0]).hide();
@@ -228,7 +247,11 @@
 
 				var JournalDatails = { 
 					'JournalId': parseInt(selectedJournalTag.attr('data-id')),
-					'JournalTitle': "Test Update Journal", 'AccessType': "0" };
+					// 'JournalTitle': selectedJournalTag.attr('data-title'), 
+					'ClipType': selectedJournalTag.attr('data-clip-type')
+					// 'ColorCode': selectedJournalTag.attr('data-color-code'),
+					// 'AccessType': selectedJournalTag.attr('data-access-type') 
+				};
 				$.ajax({
 					beforeSend: function (xhr) {
 						xhr.setRequestHeader("accessToken ", accessToken);
@@ -256,22 +279,37 @@
 					journalAccessType = self._accessType,
 					journalColorCode = self._colorCode,
 					journalClipType = self._clipType,
+					journalText = self._text;
 					clipType = {
-						ClipTypeText: 0,
-						ClipScreenShot: 1,
-						ClipText: 2
-					};
+									ClipTypeText: 0,
+									ClipScreenShot: 1,
+									ClipText: 2
+								};
 
 				var JournalDatails = { 
-					'JournalTitle': journalName,
-					'ColorCode': journalColorCode,
-					'AccessType' : journalAccessType,
-					'ClipType' : journalClipType
-				};
+										JournalTitle: journalName,
+										ColorCode: journalColorCode,
+										AccessType : journalAccessType,
+										ClipType : journalClipType,
+										Name: "",
+										ImageUrl: "",
+										Text: journalText
+									};
 				
 				if (journalName == "") {
 					console.log("Journal name can't be empty. Please enter the name!");
 					return;
+				}
+
+				if ( journalClipType == 1 ) {
+					//	In case of screenshot clip type...
+					chrome.tabs.captureVisibleTab(null, function(img) {
+						var screenshotUrl = img;
+					});
+				} else if ( journalClipType == 0 ) {
+					//	In case of url name and summary text
+				} else {
+					//	In case of clip text type.
 				}
 
 				

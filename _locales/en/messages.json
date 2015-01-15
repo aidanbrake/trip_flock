@@ -38,6 +38,9 @@
 	"saveButtonText": {
 		"message": "SAVE"
 	},
+	"createButtonText": {
+		"message": "CREATE"
+	},
 	"clipTypeLabel": {
 		"message": "Clip Type"
 	},

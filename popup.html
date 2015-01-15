@@ -69,65 +69,68 @@
 		</div>
 
 		<div class='save-container'>
-			<div class='content'>
-				<div class='save-journal-name-container'>
-					<div>
-						<h6 class='label' data-i18n='saveJournalName'></h6>
-						<input type='text' class='save-journal-name' id='save-journal-name' />
+			<form id='save-container'>
+				<div class='content'>
+					<div class='save-journal-name-container'>
+						<div>
+							<h6 class='label' data-i18n='saveJournalName'></h6>
+							<input type='text' class='save-journal-name' id='save-journal-name' />
+						</div>
+						<span>
+							<h6 class='label' data-i18n='saveJournalLabelOr'></h6>
+							<h6 class='saveNewJournal' id='save-new-journal' data-i18n='saveJournalLabelCancel'></h6>
+						</span>
 					</div>
-					<span>
-						<h6 class='label' data-i18n='saveJournalLabelOr'></h6>
-						<h6 class='saveNewJournal' id='save-new-journal' data-i18n='saveJournalLabelCancel'></h6>
-					</span>
+					<div class='save-option-container'>
+						<h6 class='label' id='clip-access-type-label' data-i18n='clipAccessTypeLabel'></h6>
+						<div class='save-journal-access-type'>
+							<input type='radio' name='clip-access-type' id='clip-access-type-private' class='clip-access-type-option' value='private' />
+							<label for='clip-access-type-private' data-i18n='clipAccessTypeUrl'></label>
+							<br />
+							<input type='radio' name='clip-access-type' id='clip-access-type-public' class='clip-access-type-option' value='public' />
+							<label for='clip-access-type-public' data-i18n='clipAccessTypeScreenshot'></label>
+						</div>
+					</div>
+					<div class='clipType'>
+						<h6 class='label' id='clip-type-label' data-i18n='clipTypeLabel'></h6>
+						<div class='clipTypeContainer'>
+							<input type='radio' name='clip-type' id='save-clip-type-url' class='clip-type-option' value='url' />
+							<label for='save-clip-type-url' data-i18n='clipTypeUrl'></label>
+							<br />
+							<input type='radio' name='clip-type' id='save-clip-type-screenshot' class='clip-type-option' value='screenshot' />
+							<label for='save-clip-type-screenshot' data-i18n='clipTypeScreenshot'></label>
+							<input type='file' name='screenshotFile'>
+							<br />
+							<input type='radio' name='clip-type' id='save-clip-type-text' class='clip-type-option' value='text' />
+							<label for='save-clip-type-text' data-i18n='clipTypeText'></label>
+							<input type='text' id='save-clip-type-text-content' data-i18n-placeholder='clipTypeTextPlaceholder' />
+						</div>
+						<div class='save-journal-color-pannel'>
+							<ul class='colors'>
+								<li class='color selected' id='color-1'  val="0"></li>
+								<li class='color' id='color-2' val="1"></li>
+								<li class='color' id='color-3' val="2"></li>
+								<li class='color' id='color-4' val="3"></li>
+								<li class='color' id='color-5' val="4"></li>
+								<li class='color' id='color-6' val="5"></li>
+								<li class='color' id='color-7' val="6"></li>
+								<li class='color' id='color-8' val="7"></li>
+								<li class='color' id='color-9' val="8"></li>
+								<li class='color' id='color-10' val="9"></li>
+								<li class='color' id='color-11' val="10"></li>
+								<li class='color' id='color-12' val="11"></li>
+								<li class='color' id='color-13' val="12"></li>
+								<li class='color' id='color-14' val="13"></li>
+								<li class='color' id='color-15' val="14"></li>
+								<li class='color' id='color-16' val="15"></li>
+							</ul>
+						</div>
+					</div>
 				</div>
-				<div class='save-option-container'>
-					<h6 class='label' id='clip-access-type-label' data-i18n='clipAccessTypeLabel'></h6>
-					<div class='save-journal-access-type'>
-						<input type='radio' name='clip-access-type' id='clip-access-type-private' class='clip-access-type-option' value='private' />
-						<label for='clip-access-type-private' data-i18n='clipAccessTypeUrl'></label>
-						<br />
-						<input type='radio' name='clip-access-type' id='clip-access-type-public' class='clip-access-type-option' value='public' />
-						<label for='clip-access-type-public' data-i18n='clipAccessTypeScreenshot'></label>
-					</div>
+				<div class='button-container'>
+					<input type='button' class='button' id='select-save-button' data-i18n-value='createButtonText' />
 				</div>
-				<div class='clipType'>
-					<h6 class='label' id='clip-type-label' data-i18n='clipTypeLabel'></h6>
-					<div class='clipTypeContainer'>
-						<input type='radio' name='clip-type' id='save-clip-type-url' class='clip-type-option' value='url' />
-						<label for='save-clip-type-url' data-i18n='clipTypeUrl'></label>
-						<br />
-						<input type='radio' name='clip-type' id='save-clip-type-screenshot' class='clip-type-option' value='screenshot' />
-						<label for='save-clip-type-screenshot' data-i18n='clipTypeScreenshot'></label>
-						<br />
-						<input type='radio' name='clip-type' id='save-clip-type-text' class='clip-type-option' value='text' />
-						<label for='save-clip-type-text' data-i18n='clipTypeText'></label>
-						<input type='text' id='save-clip-type-text-content' data-i18n-placeholder='clipTypeTextPlaceholder' />
-					</div>
-					<div class='save-journal-color-pannel'>
-						<ul class='colors'>
-							<li class='color selected' id='color-1'  val="0"></li>
-							<li class='color' id='color-2' val="1"></li>
-							<li class='color' id='color-3' val="2"></li>
-							<li class='color' id='color-4' val="3"></li>
-							<li class='color' id='color-5' val="4"></li>
-							<li class='color' id='color-6' val="5"></li>
-							<li class='color' id='color-7' val="6"></li>
-							<li class='color' id='color-8' val="7"></li>
-							<li class='color' id='color-9' val="8"></li>
-							<li class='color' id='color-10' val="9"></li>
-							<li class='color' id='color-11' val="10"></li>
-							<li class='color' id='color-12' val="11"></li>
-							<li class='color' id='color-13' val="12"></li>
-							<li class='color' id='color-14' val="13"></li>
-							<li class='color' id='color-15' val="14"></li>
-							<li class='color' id='color-16' val="15"></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class='button-container'>
-				<input type='button' class='button' id='select-save-button' data-i18n-value='saveButtonText' />
-			</div>
+			</form>
 		</div>
 	</div>
 <body>
