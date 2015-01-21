@@ -57,27 +57,27 @@
 				$($('.select-container input[type=radio][name=clip-type]')).bind('change', function(){
 					if ($(this).val() == 'text'){
 						$($('.select-container #select .input .clipTypeContainer #clip-type-text-content')[0]).attr('disabled', false);
-						self._clipType = 3; // cliptype = Text content
+						self._clipType = TripFlockAPI.clipType.text; // cliptype = Text content
 					} else if ($(this).val() == 'url') {
 						$($('.select-container #select .input .clipTypeContainer #clip-type-text-content')[0]).attr('disabled', true);
-						self._clipType = 1; // cliptype = url and summary text
+						self._clipType = TripFlockAPI.clipType.urlPageNameAndSummary; // cliptype = url and summary text
 					}
 					else {
 						$($('.select-container #select .input .clipTypeContainer #clip-type-text-content')[0]).attr('disabled', true);
-						self._clipType = 2; //// cliptype = screenshot
+						self._clipType = TripFlockAPI.clipType.screenshot; //// cliptype = screenshot
 					}
 				});
 
 				$($('.save-container .content .clipType .clipTypeContainer input[type=radio][name=clip-type]')).bind('change', function(){
 					if ($(this).val() == 'text'){
 						$($('.save-container .content .clipType .clipTypeContainer #save-clip-type-text-content')[0]).attr('disabled', false);//attr('opacity', 1);
-						self._clipType = 3; // cliptype = Text content
+						self._clipType = TripFlockAPI.clipType.text; // cliptype = Text content
 					} else if ($(this).val() == 'url') {
 						$($('.save-container .content .clipType .clipTypeContainer #save-clip-type-text-content')[0]).attr('disabled', true);
-						self._clipType = 1; // cliptype = url and summary text
+						self._clipType = TripFlockAPI.clipType.urlPageNameAndSummary; // cliptype = url and summary text
 					}else {
 						$($('.save-container .content .clipType .clipTypeContainer #save-clip-type-text-content')[0]).attr('disabled', true);
-						self._clipType = 2; //// cliptype = screenshot
+						self._clipType = TripFlockAPI.clipType.screenshot; //// cliptype = screenshot
 					}
 				});
 
@@ -86,9 +86,9 @@
 				 */
 				$('div.save-container .save-option-container input[name="clip-access-type"]').bind('change', function() {
 					if ($(this).val() == 'private')
-						self._accessType = 1;
+						self._accessType = TripFlockAPI.accessType.private;
 					else
-						self._accessType = 0;
+						self._accessType = TripFlockAPI.accessType.public;
 				});
 
 				$('form#save-container .save-journal-access-type #clip-access-type-private').click();
@@ -131,7 +131,7 @@
 									'data-clip-type':(journals[i].ClipType == undefined) ? TripFlockAPI.clipType.urlPageNameAndSummary : journals[i].ClipType
 								})
 							.val(journals[i].JournalId)
-							.text(journals[i].Title + ((journals[i].AccessType == 1) ? "(private)" : "")).appendTo($selector);
+							.text(journals[i].Title + ((journals[i].AccessType == TripFlockAPI.accessType.private) ? "(private)" : "")).appendTo($selector);
 						}
 
 						var firstJournalClipType = $($('.select-container select#journals option')[0]).attr('data-clip-type');
@@ -232,35 +232,28 @@
 				var journalSelectTag = $($('.select-container #select .input #journals')[0]),
 					selectedJournalTag = journalSelectTag.find('[value="' + journalSelectTag.val() + '"]');
 
-				chrome.runtime.sendMessage({msg: "getCurrentTabInfo"}, function(tab) {
-					var journalDatails = { 
-											JournalId: parseInt(selectedJournalTag.attr('data-id')),
-											ClipType: selectedJournalTag.attr('data-clip-type'),
-											Name: tab.title,
-											Text: self._text,
-											ImageUrl: ""
-										};
+				if (self.clipType == TripFlockAPI.clipType.screenshot)
+				{
+					//
+				} else {
+					if (self._clipType == TripFlockAPI.clipType.text && self._text == "")
+					{
+						alert("You should enter summary text to add a Summary Text WebClip");
+					}
+					chrome.runtime.sendMessage({msg: "getCurrentTabInfo"}, function(tab) {
+						var journalDatails = { 
+												JournalId: parseInt(selectedJournalTag.attr('data-id')),
+												ClipType: selectedJournalTag.attr('data-clip-type'),
+												Name: tab.title,
+												Text: self._text,
+												ImageUrl: ""
+											};
 
-					TripFlockAPI.addWebClip(journalDatails, function(data, statusText, xhr) {
-						console.log(data);
-					})
-				});
-
-				// $.ajax({
-				// 	beforeSend: function (xhr) {
-				// 		xhr.setRequestHeader("accessToken ", accessToken);
-				// 	},
-				// 	type: "PUT",
-				// 	data: JSON.stringify(JournalDatails),
-				// 	url: "http://api.tripflock.com/api/Journal/Update/",
-				// 	contentType: "application/json",
-				// 	success: function (response, textStatus, xhr) {
-				// 		alert(textStatus);
-				// 	}, 
-				// 	error: function (response) {
-				// 		alert(response.statusText);
-				// 	}
-				// }); 
+						TripFlockAPI.addWebClip(journalDatails, function(data, statusText, xhr) {
+							console.log(data);
+						})
+					});
+				}
 
 			},
 
@@ -273,14 +266,14 @@
 					journalAccessType = self._accessType,
 					journalColorCode = self._colorCode,
 					journalClipType = self._clipType,
-					journalText = self._text;
+					journalText = self._text,
 					clipType = {
 									ClipTypeText: 0,
 									ClipScreenShot: 1,
 									ClipText: 2
-								};
+								},
 
-				var JournalDatails = { 
+					JournalDatails = { 
 										JournalTitle: journalName,
 										ColorCode: journalColorCode,
 										AccessType : journalAccessType,
@@ -295,7 +288,7 @@
 					return;
 				}
 
-				if ( journalClipType == 1 ) {
+				if ( journalClipType == TripFlockAPI.clipType.screenshot ) {
 					//	In case of screenshot clip type...
 					chrome.tabs.captureVisibleTab(null, function(img) {
 						var screenshotUrl = img;
